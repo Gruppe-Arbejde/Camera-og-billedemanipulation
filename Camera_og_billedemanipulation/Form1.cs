@@ -203,5 +203,10 @@ namespace Camera_og_billedemanipulation
             buttonCamStart.Enabled = true;
             buttonStop.Enabled = false;
         }
+
+        private void imgVideo_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
