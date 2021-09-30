@@ -39,6 +39,8 @@
             this.resolutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonStop = new System.Windows.Forms.Button();
             this.buttonGreen = new System.Windows.Forms.Button();
+            this.buttonRed = new System.Windows.Forms.Button();
+            this.buttonBlue = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imgVideo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.imgCapture)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -52,7 +54,6 @@
             this.imgVideo.Size = new System.Drawing.Size(362, 243);
             this.imgVideo.TabIndex = 0;
             this.imgVideo.TabStop = false;
-            this.imgVideo.Click += new System.EventHandler(this.imgVideo_Click);
             // 
             // buttonCapture
             // 
@@ -148,21 +149,52 @@
             // buttonGreen
             // 
             this.buttonGreen.BackColor = System.Drawing.Color.Green;
-            this.buttonGreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonGreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonGreen.ForeColor = System.Drawing.Color.White;
-            this.buttonGreen.Location = new System.Drawing.Point(375, 279);
+            this.buttonGreen.Location = new System.Drawing.Point(495, 279);
             this.buttonGreen.Margin = new System.Windows.Forms.Padding(2);
             this.buttonGreen.Name = "buttonGreen";
-            this.buttonGreen.Size = new System.Drawing.Size(125, 45);
+            this.buttonGreen.Size = new System.Drawing.Size(119, 45);
             this.buttonGreen.TabIndex = 12;
             this.buttonGreen.Text = "Green scale";
             this.buttonGreen.UseVisualStyleBackColor = false;
+            this.buttonGreen.Click += new System.EventHandler(this.buttonGreen_Click);
+            // 
+            // buttonRed
+            // 
+            this.buttonRed.BackColor = System.Drawing.Color.Red;
+            this.buttonRed.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonRed.ForeColor = System.Drawing.Color.White;
+            this.buttonRed.Location = new System.Drawing.Point(375, 279);
+            this.buttonRed.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonRed.Name = "buttonRed";
+            this.buttonRed.Size = new System.Drawing.Size(119, 45);
+            this.buttonRed.TabIndex = 13;
+            this.buttonRed.Text = "Red scale";
+            this.buttonRed.UseVisualStyleBackColor = false;
+            this.buttonRed.Click += new System.EventHandler(this.buttonRed_Click);
+            // 
+            // buttonBlue
+            // 
+            this.buttonBlue.BackColor = System.Drawing.Color.Blue;
+            this.buttonBlue.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonBlue.ForeColor = System.Drawing.Color.White;
+            this.buttonBlue.Location = new System.Drawing.Point(614, 279);
+            this.buttonBlue.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonBlue.Name = "buttonBlue";
+            this.buttonBlue.Size = new System.Drawing.Size(119, 45);
+            this.buttonBlue.TabIndex = 14;
+            this.buttonBlue.Text = "Blue scale";
+            this.buttonBlue.UseVisualStyleBackColor = false;
+            this.buttonBlue.Click += new System.EventHandler(this.buttonBlue_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(744, 445);
+            this.Controls.Add(this.buttonBlue);
+            this.Controls.Add(this.buttonRed);
             this.Controls.Add(this.buttonGreen);
             this.Controls.Add(this.buttonStop);
             this.Controls.Add(this.buttonGray);
@@ -200,6 +232,8 @@
         private System.Windows.Forms.ToolStripMenuItem resolutionToolStripMenuItem;
         private System.Windows.Forms.Button buttonStop;
         private System.Windows.Forms.Button buttonGreen;
+        private System.Windows.Forms.Button buttonRed;
+        private System.Windows.Forms.Button buttonBlue;
     }
 }
 

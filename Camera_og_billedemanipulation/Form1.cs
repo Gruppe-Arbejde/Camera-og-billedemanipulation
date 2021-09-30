@@ -204,9 +204,115 @@ namespace Camera_og_billedemanipulation
             buttonStop.Enabled = false;
         }
 
-        private void imgVideo_Click(object sender, EventArgs e)
-        {
 
+        /**************************************************************************************/
+        //
+        /**************************************************************************************/
+        /// <summary>
+        /// Convert captured picture to Greenscale.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
+        private void buttonGreen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 
+                imageStack.Push(new Bitmap(imgCapture.Image));
+                //  undoToolStripMenuItem.Enabled = true;
+                Bitmap bt = new Bitmap(imgCapture.Image);
+                for (int y = 0; y < bt.Height; y++)
+                {
+                    for (int x = 0; x < bt.Width; x++)
+                    {
+                        Color c = bt.GetPixel(x, y);
+
+                        int avg = (c.R + c.G + c.B) / 3;
+                        bt.SetPixel(x, y, Color.FromArgb(0, c.G /3, 0));
+                    }
+                }
+                imgCapture.Image = bt;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+
+        /**************************************************************************************/
+        //
+        /**************************************************************************************/
+        /// <summary>
+        /// Convert captured picture to Redscale.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
+        private void buttonRed_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 
+                imageStack.Push(new Bitmap(imgCapture.Image));
+                //  undoToolStripMenuItem.Enabled = true;
+                Bitmap bt = new Bitmap(imgCapture.Image);
+                for (int y = 0; y < bt.Height; y++)
+                {
+                    for (int x = 0; x < bt.Width; x++)
+                    {
+                        Color c = bt.GetPixel(x, y);
+
+                        int avg = (c.R + c.G + c.B) / 3;
+                        bt.SetPixel(x, y, Color.FromArgb(c.R / 3,0, 0));
+                    }
+                }
+                imgCapture.Image = bt;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        /**************************************************************************************/
+        //
+        /**************************************************************************************/
+        /// <summary>
+        /// Convert captured picture to Bluescale.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
+        private void buttonBlue_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 
+                imageStack.Push(new Bitmap(imgCapture.Image));
+                //  undoToolStripMenuItem.Enabled = true;
+                Bitmap bt = new Bitmap(imgCapture.Image);
+                for (int y = 0; y < bt.Height; y++)
+                {
+                    for (int x = 0; x < bt.Width; x++)
+                    {
+                        Color c = bt.GetPixel(x, y);
+
+                        int avg = (c.R + c.G + c.B) / 3;
+                        bt.SetPixel(x, y, Color.FromArgb(0,0, c.B / 3));
+                    }
+                }
+                imgCapture.Image = bt;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        /**************************************************************************************/
+        //
+        /**************************************************************************************/
     }
 }
