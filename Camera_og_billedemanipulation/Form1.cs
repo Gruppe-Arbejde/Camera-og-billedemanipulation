@@ -188,7 +188,7 @@ namespace Camera_og_billedemanipulation
                 buttonStop.Enabled = true;
             }
         }
-
+        
         /**************************************************************************************/
         //
         /**************************************************************************************/
@@ -203,8 +203,7 @@ namespace Camera_og_billedemanipulation
             buttonCamStart.Enabled = true;
             buttonStop.Enabled = false;
         }
-
-
+        
         /**************************************************************************************/
         //
         /**************************************************************************************/
@@ -239,8 +238,7 @@ namespace Camera_og_billedemanipulation
                 MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
+        
         /**************************************************************************************/
         //
         /**************************************************************************************/
@@ -275,8 +273,7 @@ namespace Camera_og_billedemanipulation
                 MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
+        
         /**************************************************************************************/
         //
         /**************************************************************************************/
@@ -311,6 +308,7 @@ namespace Camera_og_billedemanipulation
                 MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        
         /**************************************************************************************/
         //
         /**************************************************************************************/
