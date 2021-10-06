@@ -60,10 +60,10 @@
             this.buttonCapture.BackColor = System.Drawing.Color.Red;
             this.buttonCapture.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonCapture.ForeColor = System.Drawing.Color.White;
-            this.buttonCapture.Location = new System.Drawing.Point(9, 279);
+            this.buttonCapture.Location = new System.Drawing.Point(11, 279);
             this.buttonCapture.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCapture.Name = "buttonCapture";
-            this.buttonCapture.Size = new System.Drawing.Size(365, 45);
+            this.buttonCapture.Size = new System.Drawing.Size(360, 45);
             this.buttonCapture.TabIndex = 1;
             this.buttonCapture.Text = "Capture";
             this.buttonCapture.UseVisualStyleBackColor = false;
@@ -72,7 +72,7 @@
             // comboBoxCameraList
             // 
             this.comboBoxCameraList.FormattingEnabled = true;
-            this.comboBoxCameraList.Location = new System.Drawing.Point(11, 413);
+            this.comboBoxCameraList.Location = new System.Drawing.Point(11, 347);
             this.comboBoxCameraList.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxCameraList.Name = "comboBoxCameraList";
             this.comboBoxCameraList.Size = new System.Drawing.Size(92, 21);
@@ -80,7 +80,7 @@
             // 
             // buttonCamStart
             // 
-            this.buttonCamStart.Location = new System.Drawing.Point(106, 413);
+            this.buttonCamStart.Location = new System.Drawing.Point(106, 347);
             this.buttonCamStart.Margin = new System.Windows.Forms.Padding(2);
             this.buttonCamStart.Name = "buttonCamStart";
             this.buttonCamStart.Size = new System.Drawing.Size(46, 20);
@@ -100,7 +100,7 @@
             // 
             // buttonGray
             // 
-            this.buttonGray.Location = new System.Drawing.Point(218, 412);
+            this.buttonGray.Location = new System.Drawing.Point(218, 346);
             this.buttonGray.Name = "buttonGray";
             this.buttonGray.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.buttonGray.Size = new System.Drawing.Size(75, 23);
@@ -137,7 +137,7 @@
             // 
             // buttonStop
             // 
-            this.buttonStop.Location = new System.Drawing.Point(157, 413);
+            this.buttonStop.Location = new System.Drawing.Point(157, 347);
             this.buttonStop.Margin = new System.Windows.Forms.Padding(2);
             this.buttonStop.Name = "buttonStop";
             this.buttonStop.Size = new System.Drawing.Size(46, 20);
@@ -192,7 +192,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(744, 445);
+            this.ClientSize = new System.Drawing.Size(744, 382);
             this.Controls.Add(this.buttonBlue);
             this.Controls.Add(this.buttonRed);
             this.Controls.Add(this.buttonGreen);
