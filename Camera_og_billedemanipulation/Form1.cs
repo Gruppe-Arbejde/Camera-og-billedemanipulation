@@ -194,28 +194,34 @@ namespace Camera_og_billedemanipulation
         /// 
         private void buttonRed_Click(object sender, EventArgs e)
         {
-            try
+            if (btnCapture == false)
             {
-                // 
-                imageStack.Push(new Bitmap(imgCapture.Image));
-                //  undoToolStripMenuItem.Enabled = true;
-                Bitmap bt = new Bitmap(imgCapture.Image);
-                for (int y = 0; y < bt.Height; y++)
+                MessageBox.Show("You need to capture an image first");
+            }
+            else
+                try
                 {
-                    for (int x = 0; x < bt.Width; x++)
-                    {
-                        Color c = bt.GetPixel(x, y);
 
-                        int avg = (c.R + c.G + c.B) / 3;
-                        bt.SetPixel(x, y, Color.FromArgb(c.R, 0, 0));
+                    // 
+                    imageStack.Push(new Bitmap(imgCapture.Image));
+                    //  undoToolStripMenuItem.Enabled = true;
+                    Bitmap bt = new Bitmap(imgCapture.Image);
+                    for (int y = 0; y < bt.Height; y++)
+                    {
+                        for (int x = 0; x < bt.Width; x++)
+                        {
+                            Color c = bt.GetPixel(x, y);
+
+                            int avg = (c.R + c.G + c.B) / 3;
+                            bt.SetPixel(x, y, Color.FromArgb(c.R, 0, 0));
+                        }
                     }
+                    imgCapture.Image = bt;
                 }
-                imgCapture.Image = bt;
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
         }
 
         /// <summary>
@@ -226,28 +232,33 @@ namespace Camera_og_billedemanipulation
         ///
         private void buttonGreen_Click(object sender, EventArgs e)
         {
-            try
+            if (btnCapture == false)
             {
-                // 
-                imageStack.Push(new Bitmap(imgCapture.Image));
-                //  undoToolStripMenuItem.Enabled = true;
-                Bitmap bt = new Bitmap(imgCapture.Image);
-                for (int y = 0; y < bt.Height; y++)
+                MessageBox.Show("You need to capture an image first");
+            }
+            else
+                try
                 {
-                    for (int x = 0; x < bt.Width; x++)
+                    // 
+                    imageStack.Push(new Bitmap(imgCapture.Image));
+                    //  undoToolStripMenuItem.Enabled = true;
+                    Bitmap bt = new Bitmap(imgCapture.Image);
+                    for (int y = 0; y < bt.Height; y++)
                     {
-                        Color c = bt.GetPixel(x, y);
+                        for (int x = 0; x < bt.Width; x++)
+                        {
+                            Color c = bt.GetPixel(x, y);
 
-                        int avg = (c.R + c.G + c.B) / 3;
-                        bt.SetPixel(x, y, Color.FromArgb(0, c.G, 0));
+                            int avg = (c.R + c.G + c.B) / 3;
+                            bt.SetPixel(x, y, Color.FromArgb(0, c.G, 0));
+                        }
                     }
+                    imgCapture.Image = bt;
                 }
-                imgCapture.Image = bt;
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
         }
 
         /// <summary>
@@ -258,28 +269,33 @@ namespace Camera_og_billedemanipulation
         /// 
         private void buttonBlue_Click(object sender, EventArgs e)
         {
-            try
+            if (btnCapture == false)
             {
-                // 
-                imageStack.Push(new Bitmap(imgCapture.Image));
-                //  undoToolStripMenuItem.Enabled = true;
-                Bitmap bt = new Bitmap(imgCapture.Image);
-                for (int y = 0; y < bt.Height; y++)
+                MessageBox.Show("You need to capture an image first");
+            }
+            else
+                try
                 {
-                    for (int x = 0; x < bt.Width; x++)
+                    // 
+                    imageStack.Push(new Bitmap(imgCapture.Image));
+                    //  undoToolStripMenuItem.Enabled = true;
+                    Bitmap bt = new Bitmap(imgCapture.Image);
+                    for (int y = 0; y < bt.Height; y++)
                     {
-                        Color c = bt.GetPixel(x, y);
+                        for (int x = 0; x < bt.Width; x++)
+                        {
+                            Color c = bt.GetPixel(x, y);
 
-                        int avg = (c.R + c.G + c.B) / 3;
-                        bt.SetPixel(x, y, Color.FromArgb(0, 0, c.B));
+                            int avg = (c.R + c.G + c.B) / 3;
+                            bt.SetPixel(x, y, Color.FromArgb(0, 0, c.B));
+                        }
                     }
+                    imgCapture.Image = bt;
                 }
-                imgCapture.Image = bt;
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
         }
     }
 }
