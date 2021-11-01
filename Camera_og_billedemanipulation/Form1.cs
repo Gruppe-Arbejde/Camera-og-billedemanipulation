@@ -37,6 +37,8 @@ namespace Camera_og_billedemanipulation
                 buttonCamStart.Enabled = true;
             }
             buttonStop.Enabled = false;
+
+            scalesEnable(false);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -72,7 +74,15 @@ namespace Camera_og_billedemanipulation
                 MessageBox.Show("You need to turn on your webcam first");
             }
             else   // else if bool "btnCapture" is true, the button just initiates the capture.
+            {
                 imgCapture.Image = (Image)imgVideo.Image.Clone();
+                pictureBox1.Image = (Image)imgVideo.Image.Clone();
+
+                // Color scale buttons
+                scalesEnable(true);
+
+                backcolorChange(Color.Transparent);
+            }
         }
 
         private void buttonCamStart_Click(object sender, EventArgs e)
@@ -96,7 +106,16 @@ namespace Camera_og_billedemanipulation
 
                 buttonCamStart.Enabled = false;
                 buttonStop.Enabled = true;
-                btnCapture = true;
+                do
+                {
+                    if (imgVideo.Image != null)
+                    {
+                        btnCapture = true;
+                    }
+                } while (btnCapture == false);
+                //if(imgVideo.Image != null)
+                //{
+                //}
             }
         }
 
@@ -173,10 +192,18 @@ namespace Camera_og_billedemanipulation
             {
                 gv.FinalVideo.Stop();
                 gv.FinalVideo.WaitForStop();
+                imgVideo.Image = null;
+                imgCapture.Image = null;
+                pictureBox1.Image = null;
+                btnCapture = false;
+                imageStack.Clear();
+                scalesEnable(false);
+                backcolorChange(Color.Gainsboro);
             }
             gv.FinalVideo = null;
             buttonCamStart.Enabled = true;
             buttonStop.Enabled = false;
+
         }
 
         /**************************************************************************************/
@@ -197,14 +224,14 @@ namespace Camera_og_billedemanipulation
             {
                 MessageBox.Show("You need to capture an image first");
             }
-            else
+            else if (pictureBox1.Image != null)
                 try
                 {
 
                     // 
-                    imageStack.Push(new Bitmap(imgCapture.Image));
+                    imageStack.Push(new Bitmap(pictureBox1.Image));
                     //  undoToolStripMenuItem.Enabled = true;
-                    Bitmap bt = new Bitmap(imgCapture.Image);
+                    Bitmap bt = new Bitmap(pictureBox1.Image);
                     for (int y = 0; y < bt.Height; y++)
                     {
                         for (int x = 0; x < bt.Width; x++)
@@ -235,13 +262,13 @@ namespace Camera_og_billedemanipulation
             {
                 MessageBox.Show("You need to capture an image first");
             }
-            else
+            else if (pictureBox1.Image != null)
                 try
                 {
                     // 
-                    imageStack.Push(new Bitmap(imgCapture.Image));
+                    imageStack.Push(new Bitmap(pictureBox1.Image));
                     //  undoToolStripMenuItem.Enabled = true;
-                    Bitmap bt = new Bitmap(imgCapture.Image);
+                    Bitmap bt = new Bitmap(pictureBox1.Image);
                     for (int y = 0; y < bt.Height; y++)
                     {
                         for (int x = 0; x < bt.Width; x++)
@@ -272,13 +299,13 @@ namespace Camera_og_billedemanipulation
             {
                 MessageBox.Show("You need to capture an image first");
             }
-            else
+            else if (pictureBox1.Image != null)
                 try
                 {
                     // 
-                    imageStack.Push(new Bitmap(imgCapture.Image));
+                    imageStack.Push(new Bitmap(pictureBox1.Image));
                     //  undoToolStripMenuItem.Enabled = true;
-                    Bitmap bt = new Bitmap(imgCapture.Image);
+                    Bitmap bt = new Bitmap(pictureBox1.Image);
                     for (int y = 0; y < bt.Height; y++)
                     {
                         for (int x = 0; x < bt.Width; x++)
@@ -295,6 +322,21 @@ namespace Camera_og_billedemanipulation
                 {
                     MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+        }
+
+        private void scalesEnable(Boolean status)
+        {
+            // Color scale buttons
+            buttonBlue.Visible = status;
+            buttonRed.Visible = status;
+            buttonGray.Visible = status;
+            buttonGreen.Visible = status;
+        }
+
+        private void backcolorChange(Color color)
+        {
+            imgVideo.BackColor = color;
+            imgCapture.BackColor = color;
         }
     }
 }
