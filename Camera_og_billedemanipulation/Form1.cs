@@ -38,7 +38,7 @@ namespace Camera_og_billedemanipulation
             }
             buttonStop.Enabled = false;
 
-            scalesEnable(false);
+            buttonsEnable(false);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -79,7 +79,7 @@ namespace Camera_og_billedemanipulation
                 pictureBox1.Image = (Image)imgVideo.Image.Clone();
 
                 // Color scale buttons
-                scalesEnable(true);
+                buttonsEnable(true);
 
                 backcolorChange(Color.Transparent);
             }
@@ -161,29 +161,37 @@ namespace Camera_og_billedemanipulation
 
         private void resolutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-            gv.FinalVideo.SignalToStop();
-
-            gv.FinalVideo.Stop();
-            gv.FinalVideo.WaitForStop();
-            gv.FinalVideo.NewFrame -= new NewFrameEventHandler(FinalVideo_NewFrame);
-
-            CameraSettings cs = new CameraSettings(gv);
-            DialogResult dr = cs.ShowDialog();
-
-            if (DialogResult.OK == dr)
+            if (gv.FinalVideo != null)
             {
-                VideoCapabilities[] vc = gv.FinalVideo.VideoCapabilities;
-                int resolutionSelection = int.Parse(cs.tabControl1.SelectedTab.Text) - 1;  // Minus 1 due to 0 offset
 
-                gv.FinalVideo.VideoResolution = vc[resolutionSelection];
+                gv.FinalVideo.SignalToStop();
 
-                gv.FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
-                gv.FinalVideo.Start();
+                gv.FinalVideo.Stop();
+                gv.FinalVideo.WaitForStop();
+                gv.FinalVideo.NewFrame -= new NewFrameEventHandler(FinalVideo_NewFrame);
 
-                buttonCamStart.Enabled = false;
-                buttonStop.Enabled = true;
+                CameraSettings cs = new CameraSettings(gv);
+                DialogResult dr = cs.ShowDialog();
+
+                if (DialogResult.OK == dr)
+                {
+                    VideoCapabilities[] vc = gv.FinalVideo.VideoCapabilities;
+                    int resolutionSelection = int.Parse(cs.tabControl1.SelectedTab.Text) - 1;  // Minus 1 due to 0 offset
+
+                    gv.FinalVideo.VideoResolution = vc[resolutionSelection];
+
+                    gv.FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
+                    gv.FinalVideo.Start();
+
+                    buttonCamStart.Enabled = false;
+                    buttonStop.Enabled = true;
+                }
             }
+            else
+            {
+                MessageBox.Show("You need to turn on your webcam first");
+            }
+
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -197,7 +205,7 @@ namespace Camera_og_billedemanipulation
                 pictureBox1.Image = null;
                 btnCapture = false;
                 imageStack.Clear();
-                scalesEnable(false);
+                buttonsEnable(false);
                 backcolorChange(Color.Gainsboro);
             }
             gv.FinalVideo = null;
@@ -324,19 +332,26 @@ namespace Camera_og_billedemanipulation
                 }
         }
 
-        private void scalesEnable(Boolean status)
+        private void buttonsEnable(Boolean status)
         {
             // Color scale buttons
             buttonBlue.Visible = status;
             buttonRed.Visible = status;
             buttonGray.Visible = status;
             buttonGreen.Visible = status;
+            buttonHistogram.Visible = status;
         }
 
         private void backcolorChange(Color color)
         {
             imgVideo.BackColor = color;
             imgCapture.BackColor = color;
+        }
+
+        private void buttonHistogram_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.ShowDialog();
         }
     }
 }
