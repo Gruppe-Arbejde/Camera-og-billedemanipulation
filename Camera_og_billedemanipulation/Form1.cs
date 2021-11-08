@@ -338,5 +338,20 @@ namespace Camera_og_billedemanipulation
             imgVideo.BackColor = color;
             imgCapture.BackColor = color;
         }
+
+        private void loadImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            //var path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
+            ofd.Title = "Open Image";
+            ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            ofd.Filter = "Image Files(*.BMP;*.JPG;*.PNG;*.GIF)|*.BMP;*.JPG;*.PNG;*.GIF|All Files(*.*)|*.*";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+        }
     }
 }
