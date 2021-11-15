@@ -119,38 +119,7 @@ namespace Camera_og_billedemanipulation
             }
         }
 
-        /// <summary>
-        /// Convert captured picture to Grayscale.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// 
-        private void buttonGrayscale_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 
-                imageStack.Push(new Bitmap(imgCapture.Image));
-                //  undoToolStripMenuItem.Enabled = true;
-                Bitmap bt = new Bitmap(imgCapture.Image);
-                for (int y = 0; y < bt.Height; y++)
-                {
-                    for (int x = 0; x < bt.Width; x++)
-                    {
-                        Color c = bt.GetPixel(x, y);
-
-                        int avg = (c.R + c.G + c.B) / 3;
-                        bt.SetPixel(x, y, Color.FromArgb(avg, avg, avg));
-                    }
-                }
-                imgCapture.Image = bt;
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-        }
+        
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -192,14 +161,15 @@ namespace Camera_og_billedemanipulation
             {
                 gv.FinalVideo.Stop();
                 gv.FinalVideo.WaitForStop();
-                imgVideo.Image = null;
-                imgCapture.Image = null;
-                pictureBox1.Image = null;
-                btnCapture = false;
-                imageStack.Clear();
-                scalesEnable(false);
-                backcolorChange(Color.Gainsboro);
             }
+
+            imgVideo.Image = null;
+            imgCapture.Image = null;
+            pictureBox1.Image = null;
+            btnCapture = false;
+            imageStack.Clear();
+            scalesEnable(false);
+            backcolorChange(Color.Gainsboro);
             gv.FinalVideo = null;
             buttonCamStart.Enabled = true;
             buttonStop.Enabled = false;
@@ -220,7 +190,7 @@ namespace Camera_og_billedemanipulation
         /// 
         private void buttonRed_Click(object sender, EventArgs e)
         {
-            if (btnCapture == false)
+            if (pictureBox1.Image == null)
             {
                 MessageBox.Show("You need to capture an image first");
             }
@@ -258,7 +228,7 @@ namespace Camera_og_billedemanipulation
         ///
         private void buttonGreen_Click(object sender, EventArgs e)
         {
-            if (btnCapture == false)
+            if (pictureBox1.Image == null)
             {
                 MessageBox.Show("You need to capture an image first");
             }
@@ -295,7 +265,7 @@ namespace Camera_og_billedemanipulation
         /// 
         private void buttonBlue_Click(object sender, EventArgs e)
         {
-            if (btnCapture == false)
+            if (pictureBox1.Image == null)
             {
                 MessageBox.Show("You need to capture an image first");
             }
@@ -324,6 +294,39 @@ namespace Camera_og_billedemanipulation
                 }
         }
 
+        /// <summary>
+        /// Convert captured picture to Grayscale.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// 
+        private void buttonGrayscale_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 
+                imageStack.Push(new Bitmap(imgCapture.Image));
+                //  undoToolStripMenuItem.Enabled = true;
+                Bitmap bt = new Bitmap(imgCapture.Image);
+                for (int y = 0; y < bt.Height; y++)
+                {
+                    for (int x = 0; x < bt.Width; x++)
+                    {
+                        Color c = bt.GetPixel(x, y);
+
+                        int avg = (c.R + c.G + c.B) / 3;
+                        bt.SetPixel(x, y, Color.FromArgb(avg, avg, avg));
+                    }
+                }
+                imgCapture.Image = bt;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
         private void scalesEnable(Boolean status)
         {
             // Color scale buttons
@@ -350,8 +353,25 @@ namespace Camera_og_billedemanipulation
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
+                Bitmap bt = new Bitmap(ofd.FileName);
+                imgCapture.Image = bt;
+                pictureBox1.Image = bt;
+                scalesEnable(true);
+                buttonStop.Enabled = true;
 
+                // Resize a picture to fit.
+                if (bt.Width < imgCapture.Width && bt.Height < imgCapture.Height)
+                {
+                    imgCapture.SizeMode = PictureBoxSizeMode.Normal;
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
+                }
+                else
+                {
+                    imgCapture.SizeMode = PictureBoxSizeMode.Zoom;
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                }
             }
+            ofd.Dispose(); // Disposes everything that is unnecessary.
         }
     }
 }
