@@ -12,16 +12,18 @@ namespace Camera_og_billedemanipulation
 {
     public partial class Form2 : Form
     {
+
         public Form2()
         {
             InitializeComponent();
         }
 
+        public Image ImageFromForm1 { get; set; }
 
-        private void Form2_Load(object sender, Image image, EventArgs e)
+        private void Form2_Load(object sender, EventArgs e)
         {
+            pictureBox1.Image = ImageFromForm1;
 
         }
-
     }
 }

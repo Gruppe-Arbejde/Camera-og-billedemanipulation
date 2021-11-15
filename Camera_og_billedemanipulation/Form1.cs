@@ -393,8 +393,8 @@ namespace Camera_og_billedemanipulation
 
         private void buttonHistogram_Click(object sender, EventArgs e)
         {
-            Form form2 = new Form2();
-
+            Form2 form2 = new Form2();
+            form2.ImageFromForm1 = imgCapture.Image;
             form2.ShowDialog();
         }
     }
