@@ -116,6 +116,7 @@ namespace Camera_og_billedemanipulation
                 //if(imgVideo.Image != null)
                 //{
                 //}
+
             }
         }
 
@@ -373,5 +374,21 @@ namespace Camera_og_billedemanipulation
             }
             ofd.Dispose(); // Disposes everything that is unnecessary.
         }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+
+            sfd.Title = "Save Image"; // Form title
+            sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            sfd.Filter = "Image Files(*.JPG)|*.JPG|All files (*.*)|*.*";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                imgCapture.Image.Save(sfd.FileName, System.Drawing.Imaging.ImageFormat.Jpeg); // "imgCapture" - From wecam project!
+            }
+            sfd.Dispose(); // Disposes everything that is unnecessary.
+        }
+
     }
 }
