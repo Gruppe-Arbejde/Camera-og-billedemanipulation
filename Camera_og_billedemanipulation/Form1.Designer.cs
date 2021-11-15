@@ -217,7 +217,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(528, 36);
+            this.pictureBox1.Location = new System.Drawing.Point(579, 36);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(159, 54);
@@ -236,8 +236,9 @@
             this.buttonHistogram.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.buttonHistogram.Size = new System.Drawing.Size(229, 100);
             this.buttonHistogram.TabIndex = 16;
-            this.buttonHistogram.Text = "Gray";
+            this.buttonHistogram.Text = "Histogram";
             this.buttonHistogram.UseVisualStyleBackColor = false;
+            this.buttonHistogram.Click += new System.EventHandler(this.buttonHistogram_Click);
             // 
             // Form1
             // 

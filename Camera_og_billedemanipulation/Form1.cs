@@ -38,7 +38,7 @@ namespace Camera_og_billedemanipulation
             }
             buttonStop.Enabled = false;
 
-            scalesEnable(false);
+            buttonsStatus(false);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -79,7 +79,7 @@ namespace Camera_og_billedemanipulation
                 pictureBox1.Image = (Image)imgVideo.Image.Clone();
 
                 // Color scale buttons
-                scalesEnable(true);
+                buttonsStatus(true);
 
                 backcolorChange(Color.Transparent);
             }
@@ -169,7 +169,7 @@ namespace Camera_og_billedemanipulation
             pictureBox1.Image = null;
             btnCapture = false;
             imageStack.Clear();
-            scalesEnable(false);
+            buttonsStatus(false);
             backcolorChange(Color.Gainsboro);
             gv.FinalVideo = null;
             buttonCamStart.Enabled = true;
@@ -328,13 +328,14 @@ namespace Camera_og_billedemanipulation
 
         }
 
-        private void scalesEnable(Boolean status)
+        private void buttonsStatus(Boolean status)
         {
             // Color scale buttons
             buttonBlue.Visible = status;
             buttonRed.Visible = status;
             buttonGray.Visible = status;
             buttonGreen.Visible = status;
+            buttonHistogram.Visible = status;
         }
 
         private void backcolorChange(Color color)
@@ -357,7 +358,7 @@ namespace Camera_og_billedemanipulation
                 Bitmap bt = new Bitmap(ofd.FileName);
                 imgCapture.Image = bt;
                 pictureBox1.Image = bt;
-                scalesEnable(true);
+                buttonsStatus(true);
                 buttonStop.Enabled = true;
 
                 // Resize a picture to fit.
@@ -390,5 +391,11 @@ namespace Camera_og_billedemanipulation
             sfd.Dispose(); // Disposes everything that is unnecessary.
         }
 
+        private void buttonHistogram_Click(object sender, EventArgs e)
+        {
+            Form form2 = new Form2();
+
+            form2.ShowDialog();
+        }
     }
 }

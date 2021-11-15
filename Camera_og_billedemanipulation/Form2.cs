@@ -17,7 +17,8 @@ namespace Camera_og_billedemanipulation
             InitializeComponent();
         }
 
-        private void Form2_Load(object sender, EventArgs e)
+
+        private void Form2_Load(object sender, Image image, EventArgs e)
         {
 
         }
