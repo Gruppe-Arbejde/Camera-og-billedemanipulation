@@ -114,10 +114,6 @@ namespace Camera_og_billedemanipulation
                         btnCapture = true;
                     }
                 } while (btnCapture == false);
-                //if(imgVideo.Image != null)
-                //{
-                //}
-
             }
         }
 
@@ -130,9 +126,7 @@ namespace Camera_og_billedemanipulation
 
         private void resolutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             gv.FinalVideo.SignalToStop();
-
             gv.FinalVideo.Stop();
             gv.FinalVideo.WaitForStop();
             gv.FinalVideo.NewFrame -= new NewFrameEventHandler(FinalVideo_NewFrame);
@@ -173,7 +167,6 @@ namespace Camera_og_billedemanipulation
             gv.FinalVideo = null;
             buttonCamStart.Enabled = true;
             buttonStop.Enabled = false;
-
         }
 
         private void loadImageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -400,7 +393,7 @@ namespace Camera_og_billedemanipulation
             buttonGray.Visible = status;
             buttonGreen.Visible = status;
             buttonHistogram.Visible = status;
-            
+
         }
 
         private void backcolorChange(Color color)
@@ -425,22 +418,36 @@ namespace Camera_og_billedemanipulation
 
         private void buttonTimer_Click_1(object sender, EventArgs e)
         {
-            timer1.Enabled = !timer1.Enabled;
-
-            switch (buttonTimer.Text)
+            if (btnCapture == false)
             {
-                case "Start Timer":
-                    buttonTimer.Text = "Stop Timer";
-                    buttonTimer.BackColor = Color.Red;
-                    break;
-                case "Stop Timer":
-                    buttonTimer.Text = "Start Timer";
-                    buttonTimer.BackColor = Color.LimeGreen;
-                    break;
-                default:
-                    buttonTimer.Text = "Stop Timer";
-                    buttonTimer.BackColor = Color.Red;
-                    break;
+                MessageBox.Show("You need to turn on your webcam first");
+            }
+            else
+            {
+                timer1.Enabled = !timer1.Enabled;
+
+                switch (buttonTimer.Text)
+                {
+                    case "Start Timer":
+                        buttonTimer.Text = "Stop Timer";
+                        buttonTimer.BackColor = Color.Red;
+                        break;
+                    case "Stop Timer":
+                        buttonTimer.Text = "Start Timer";
+                        buttonTimer.BackColor = Color.LimeGreen;
+                        break;
+                    default:
+                        buttonTimer.Text = "Stop Timer";
+                        buttonTimer.BackColor = Color.Red;
+                        break;
+                }
+                imgCapture.Image = (Image)imgVideo.Image.Clone();
+                pictureBox1.Image = (Image)imgVideo.Image.Clone();
+
+                // Color scale buttons
+                buttonsStatus(true);
+
+                backcolorChange(Color.Transparent);
             }
         }
     }
