@@ -72,7 +72,7 @@
             this.buttonCapture.Location = new System.Drawing.Point(12, 288);
             this.buttonCapture.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonCapture.Name = "buttonCapture";
-            this.buttonCapture.Size = new System.Drawing.Size(379, 71);
+            this.buttonCapture.Size = new System.Drawing.Size(221, 71);
             this.buttonCapture.TabIndex = 1;
             this.buttonCapture.Text = "Capture";
             this.buttonCapture.UseVisualStyleBackColor = false;
@@ -250,14 +250,17 @@
             // 
             // buttonTimer
             // 
-            this.buttonTimer.Location = new System.Drawing.Point(399, 292);
-            this.buttonTimer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonTimer.BackColor = System.Drawing.Color.LimeGreen;
+            this.buttonTimer.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonTimer.ForeColor = System.Drawing.Color.White;
+            this.buttonTimer.Location = new System.Drawing.Point(239, 288);
+            this.buttonTimer.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonTimer.Name = "buttonTimer";
-            this.buttonTimer.Size = new System.Drawing.Size(47, 68);
-            this.buttonTimer.TabIndex = 17;
-            this.buttonTimer.Text = "button1";
-            this.buttonTimer.UseVisualStyleBackColor = true;
-            this.buttonTimer.Click += new System.EventHandler(this.buttonTimer_Click);
+            this.buttonTimer.Size = new System.Drawing.Size(206, 71);
+            this.buttonTimer.TabIndex = 18;
+            this.buttonTimer.Text = "Start Timer";
+            this.buttonTimer.UseVisualStyleBackColor = false;
+            this.buttonTimer.Click += new System.EventHandler(this.buttonTimer_Click_1);
             // 
             // Form1
             // 

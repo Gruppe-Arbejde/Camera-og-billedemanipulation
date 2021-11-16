@@ -400,6 +400,7 @@ namespace Camera_og_billedemanipulation
             buttonGray.Visible = status;
             buttonGreen.Visible = status;
             buttonHistogram.Visible = status;
+            
         }
 
         private void backcolorChange(Color color)
@@ -421,10 +422,26 @@ namespace Camera_og_billedemanipulation
 
             imgCapture.Image = (System.Drawing.Image)grayImage.Clone();
         }
-        private void buttonTimer_Click(object sender, EventArgs e)
+
+        private void buttonTimer_Click_1(object sender, EventArgs e)
         {
             timer1.Enabled = !timer1.Enabled;
-        }
 
+            switch (buttonTimer.Text)
+            {
+                case "Start Timer":
+                    buttonTimer.Text = "Stop Timer";
+                    buttonTimer.BackColor = Color.Red;
+                    break;
+                case "Stop Timer":
+                    buttonTimer.Text = "Start Timer";
+                    buttonTimer.BackColor = Color.LimeGreen;
+                    break;
+                default:
+                    buttonTimer.Text = "Stop Timer";
+                    buttonTimer.BackColor = Color.Red;
+                    break;
+            }
+        }
     }
 }
