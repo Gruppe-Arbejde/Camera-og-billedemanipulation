@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using AForge.Imaging.Filters;
 using AForge.Video;
 using AForge.Video.DirectShow;
 
@@ -20,6 +21,7 @@ namespace Camera_og_billedemanipulation
             InitializeComponent();
             buttonCamStart.Enabled = false;
             gv = new GlobalVars(); // Initialize variable 
+            timer1.Interval = 1000;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -404,6 +406,24 @@ namespace Camera_og_billedemanipulation
         {
             imgVideo.BackColor = color;
             imgCapture.BackColor = color;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Bitmap bt = (Bitmap)imgVideo.Image.Clone();
+
+            // It is only possible to make the theshold on a grayscale picture 
+            // create grayscale filter (BT709) 
+            Grayscale filter = new Grayscale(0.2125, 0.7154, 0.0721);
+
+            // apply the filter 
+            Bitmap grayImage = filter.Apply(bt);
+
+            imgCapture.Image = (System.Drawing.Image)grayImage.Clone();
+        }
+        private void buttonTimer_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = !timer1.Enabled;
         }
 
     }
