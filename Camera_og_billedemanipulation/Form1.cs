@@ -13,15 +13,15 @@ namespace Camera_og_billedemanipulation
         //variable declaration
         Stack<Bitmap> imageStack;
         internal GlobalVars gv;  // Instantiate Global Var
-        bool btnCapture = false; // bool that by default is false. This bool is used to check if the capture button should be enabled or not,
-                                 // in order to stop the user from using capture button when not supposed.
+        bool btnCapture = false; // bool that by default is false. This bool is used to check if the capture button should be enabled or not, in order to stop the user from using capture button when not supposed.
+        //bool imgCaptureBox = false;
 
         public Form1()
         {
             InitializeComponent();
             buttonCamStart.Enabled = false;
             gv = new GlobalVars(); // Initialize variable 
-            timer1.Interval = 1000;
+            timer1.Interval = 1000; // How often our timer should take a picture (time is in ms. 1000ms = 1 second)
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -39,18 +39,18 @@ namespace Camera_og_billedemanipulation
                 buttonCamStart.Enabled = true;
             }
             buttonStop.Enabled = false;
-
             buttonsStatus(false);
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // We ask the user if they want to close the program.
             DialogResult dr = MessageBox.Show("Sure you want to close?", "Are you sure?", MessageBoxButtons.YesNo);
             if (DialogResult.No == dr)
             {
-                e.Cancel = true;
+                e.Cancel = true; // if they so no, then we cancel the shutdown
             }
-            else
+            else // otherwise we'll just shutdown the program.
             {
                 if (gv.FinalVideo != null)
                 {
@@ -69,20 +69,19 @@ namespace Camera_og_billedemanipulation
 
         private void buttonCapture_Click(object sender, EventArgs e)
         {
-            // Check if bool "btnCapture" is false, and if so, open a message box where it tells you to turn on webcam before you can use the capture button
+            // We check if our bool "btnCapture" is false, and if so, then a message box will tell the user to turn on their webcam before capturing an image
             if (btnCapture == false)
             {
-                MessageBox.Show("You need to turn on your webcam first");
+                MessageBox.Show($"{NoWebOn}", $"{NoWebDet}");
             }
-            else   // else if bool "btnCapture" is true, the button just initiates the capture.
+            // Otherwise we'll enable the capture button. If "btnCapture" is true.
+            else
             {
                 imgCapture.Image = (Image)imgVideo.Image.Clone();
                 pictureBox1.Image = (Image)imgVideo.Image.Clone();
 
-                // Color scale buttons
-                buttonsStatus(true);
-
-                backcolorChange(Color.Transparent);
+                buttonsStatus(true);    // Color scale buttons
+                backcolorChange(Color.Transparent); // Hides the button, when we don't need it
             }
         }
 
@@ -104,11 +103,12 @@ namespace Camera_og_billedemanipulation
                 // Enable eventhandler
                 gv.FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
                 gv.FinalVideo.Start();
-
+                // Since already have our cam started, we'll disable the start button. and at the same time enable the stop button.
                 buttonCamStart.Enabled = false;
                 buttonStop.Enabled = true;
                 do
                 {
+                    // and if our picturebox "imgVideo" is not empy, then we'll allow change the bool "btnCapture" to true. 
                     if (imgVideo.Image != null)
                     {
                         btnCapture = true;
@@ -119,44 +119,51 @@ namespace Camera_og_billedemanipulation
 
         private void undoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Only if there is still something left on ehe stack
+            // Only if there is still something left on the stack
             if (imageStack.Count > 0)
                 imgCapture.Image = imageStack.Pop();
         }
 
         private void resolutionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            gv.FinalVideo.SignalToStop();
-            gv.FinalVideo.Stop();
-            gv.FinalVideo.WaitForStop();
-            gv.FinalVideo.NewFrame -= new NewFrameEventHandler(FinalVideo_NewFrame);
-
-            CameraSettings cs = new CameraSettings(gv);
-            DialogResult dr = cs.ShowDialog();
-
-            if (DialogResult.OK == dr)
+            if (imgVideo.Image == null)
             {
-                VideoCapabilities[] vc = gv.FinalVideo.VideoCapabilities;
-                int resolutionSelection = int.Parse(cs.tabControl1.SelectedTab.Text) - 1;  // Minus 1 due to 0 offset
+                MessageBox.Show($"{NoWebOn}", $"{NoWebDet}");
+            }
+            else
+            {
+                gv.FinalVideo.SignalToStop();
+                gv.FinalVideo.Stop();
+                gv.FinalVideo.WaitForStop();
+                gv.FinalVideo.NewFrame -= new NewFrameEventHandler(FinalVideo_NewFrame);
 
-                gv.FinalVideo.VideoResolution = vc[resolutionSelection];
+                CameraSettings cs = new CameraSettings(gv);
+                DialogResult dr = cs.ShowDialog();
 
-                gv.FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
-                gv.FinalVideo.Start();
+                if (DialogResult.OK == dr)
+                {
+                    VideoCapabilities[] vc = gv.FinalVideo.VideoCapabilities;
+                    int resolutionSelection = int.Parse(cs.tabControl1.SelectedTab.Text) - 1;  // Minus 1 due to 0 offset
 
-                buttonCamStart.Enabled = false;
-                buttonStop.Enabled = true;
+                    gv.FinalVideo.VideoResolution = vc[resolutionSelection];
+
+                    gv.FinalVideo.NewFrame += new NewFrameEventHandler(FinalVideo_NewFrame);
+                    gv.FinalVideo.Start();
+
+                    buttonCamStart.Enabled = false;
+                    buttonStop.Enabled = true;
+                }
             }
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
+            // We check if there's anything we should stop, and if there is, then we'll close it, and wait.
             if (gv.FinalVideo != null)
             {
                 gv.FinalVideo.Stop();
                 gv.FinalVideo.WaitForStop();
             }
-
             imgVideo.Image = null;
             imgCapture.Image = null;
             pictureBox1.Image = null;
@@ -203,17 +210,24 @@ namespace Camera_og_billedemanipulation
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog sfd = new SaveFileDialog();
-
-            sfd.Title = "Save Image"; // Form title
-            sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            sfd.Filter = "Image Files(*.JPG)|*.JPG|All files (*.*)|*.*";
-
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if (imgCapture.Image == null)
             {
-                imgCapture.Image.Save(sfd.FileName, System.Drawing.Imaging.ImageFormat.Jpeg); // "imgCapture" - From wecam project!
+                MessageBox.Show("Please capture an image first.", "No image detected!");
             }
-            sfd.Dispose(); // Disposes everything that is unnecessary.
+            else
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+
+                sfd.Title = "Save Image"; // Form title
+                sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                sfd.Filter = "Image Files(*.JPG)|*.JPG|All files (*.*)|*.*";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    imgCapture.Image.Save(sfd.FileName, System.Drawing.Imaging.ImageFormat.Jpeg); // "imgCapture" - From wecam project!
+                }
+                sfd.Dispose(); // Disposes everything that is unnecessary.
+            }
         }
 
         private void buttonHistogram_Click(object sender, EventArgs e)
@@ -234,12 +248,6 @@ namespace Camera_og_billedemanipulation
             form2.ShowDialog();
         }
 
-        /**************************************************************************************/
-        //
-        /**************************************************************************************/
-
-
-
         /// <summary>
         /// Convert captured picture to Redscale.
         /// </summary>
@@ -248,15 +256,16 @@ namespace Camera_og_billedemanipulation
         /// 
         private void buttonRed_Click(object sender, EventArgs e)
         {
+            // We'll check if the picturebox actually contains any image. and if not, then we'll tell the user to capture one first
             if (pictureBox1.Image == null)
             {
                 MessageBox.Show("You need to capture an image first");
             }
+            // otherwise we'll see if the picturebox is not empty, and if it isn't then we'll continue.
             else if (pictureBox1.Image != null)
+            {
                 try
                 {
-
-                    // 
                     imageStack.Push(new Bitmap(pictureBox1.Image));
                     //  undoToolStripMenuItem.Enabled = true;
                     Bitmap bt = new Bitmap(pictureBox1.Image);
@@ -272,10 +281,12 @@ namespace Camera_og_billedemanipulation
                     }
                     imgCapture.Image = bt;
                 }
+                // error handling
                 catch (NullReferenceException)
                 {
                     MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
         }
 
         /// <summary>
@@ -286,14 +297,16 @@ namespace Camera_og_billedemanipulation
         ///
         private void buttonGreen_Click(object sender, EventArgs e)
         {
+            // We'll check if the picturebox actually contains any image. and if not, then we'll tell the user to capture one first
             if (pictureBox1.Image == null)
             {
                 MessageBox.Show("You need to capture an image first");
             }
+            // otherwise we'll see if the picturebox is not empty, and if it isn't then we'll continue.
             else if (pictureBox1.Image != null)
+            {
                 try
                 {
-                    // 
                     imageStack.Push(new Bitmap(pictureBox1.Image));
                     //  undoToolStripMenuItem.Enabled = true;
                     Bitmap bt = new Bitmap(pictureBox1.Image);
@@ -309,10 +322,12 @@ namespace Camera_og_billedemanipulation
                     }
                     imgCapture.Image = bt;
                 }
+                // error handling
                 catch (NullReferenceException)
                 {
                     MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
         }
 
         /// <summary>
@@ -323,11 +338,14 @@ namespace Camera_og_billedemanipulation
         /// 
         private void buttonBlue_Click(object sender, EventArgs e)
         {
+            // We'll check if the picturebox actually contains any image. and if not, then we'll tell the user to capture one first
             if (pictureBox1.Image == null)
             {
                 MessageBox.Show("You need to capture an image first");
             }
+            // otherwise we'll see if the picturebox is not empty, and if it isn't then we'll continue.
             else if (pictureBox1.Image != null)
+            {
                 try
                 {
                     // 
@@ -346,10 +364,12 @@ namespace Camera_og_billedemanipulation
                     }
                     imgCapture.Image = bt;
                 }
+                // error handling
                 catch (NullReferenceException)
                 {
                     MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
         }
 
         /// <summary>
@@ -360,40 +380,35 @@ namespace Camera_og_billedemanipulation
         /// 
         private void buttonGrayscale_Click(object sender, EventArgs e)
         {
-            try
+            // We'll check if the picturebox actually contains any image. and if not, then we'll tell the user to capture one first
+            if (pictureBox1.Image == null)
             {
-                // 
-                imageStack.Push(new Bitmap(pictureBox1.Image));
-                //  undoToolStripMenuItem.Enabled = true;
-                Bitmap bt = new Bitmap(pictureBox1.Image);
-                for (int y = 0; y < bt.Height; y++)
+                MessageBox.Show("You need to capture an image first");
+            }
+            // otherwise we'll see if the picturebox is not empty, and if it isn't then we'll continue.
+            else if (pictureBox1.Image != null)
+                try
                 {
-                    for (int x = 0; x < bt.Width; x++)
+                    imageStack.Push(new Bitmap(pictureBox1.Image));
+                    //  undoToolStripMenuItem.Enabled = true;
+                    Bitmap bt = new Bitmap(pictureBox1.Image);
+                    for (int y = 0; y < bt.Height; y++)
                     {
-                        Color c = bt.GetPixel(x, y);
+                        for (int x = 0; x < bt.Width; x++)
+                        {
+                            Color c = bt.GetPixel(x, y);
 
-                        int avg = (c.R + c.G + c.B) / 3;
-                        bt.SetPixel(x, y, Color.FromArgb(avg, avg, avg));
+                            int avg = (c.R + c.G + c.B) / 3;
+                            bt.SetPixel(x, y, Color.FromArgb(avg, avg, avg));
+                        }
                     }
+                    imgCapture.Image = bt;
                 }
-                imgCapture.Image = bt;
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-        }
-
-        private void buttonsStatus(Boolean status)
-        {
-            // Color scale buttons
-            buttonBlue.Visible = status;
-            buttonRed.Visible = status;
-            buttonGray.Visible = status;
-            buttonGreen.Visible = status;
-            buttonHistogram.Visible = status;
-
+                // error handling
+                catch (NullReferenceException)
+                {
+                    MessageBox.Show("You need to capture a picture first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
         }
 
         private void backcolorChange(Color color)
@@ -418,9 +433,10 @@ namespace Camera_og_billedemanipulation
 
         private void buttonTimer_Click_1(object sender, EventArgs e)
         {
+            // we're checking if "btnCapture" is false, and if so, we'll prompt the user to enable their webcam first.
             if (btnCapture == false)
             {
-                MessageBox.Show("You need to turn on your webcam first");
+                MessageBox.Show($"{NoWebOn}", $"{NoWebDet}");
             }
             else
             {
@@ -428,10 +444,12 @@ namespace Camera_og_billedemanipulation
 
                 switch (buttonTimer.Text)
                 {
+                    // when we click on the timer button when it says start timer, then we'll change the text on the button and also the colour.
                     case "Start Timer":
                         buttonTimer.Text = "Stop Timer";
                         buttonTimer.BackColor = Color.Red;
                         break;
+                    // when we click on the timer button when it says start timer, then we'll change the text on the button and also the colour.
                     case "Stop Timer":
                         buttonTimer.Text = "Start Timer";
                         buttonTimer.BackColor = Color.LimeGreen;
@@ -450,5 +468,19 @@ namespace Camera_og_billedemanipulation
                 backcolorChange(Color.Transparent);
             }
         }
+
+        private void buttonsStatus(Boolean status)
+        {
+            // Color scale buttons
+            buttonBlue.Visible = status;
+            buttonRed.Visible = status;
+            buttonGray.Visible = status;
+            buttonGreen.Visible = status;
+            buttonHistogram.Visible = status;
+
+        }
+
+        string NoWebOn = "You need to turn your webcam on first.";
+        string NoWebDet = "No webcam detected!";
     }
 }
