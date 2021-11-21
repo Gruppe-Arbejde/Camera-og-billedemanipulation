@@ -234,16 +234,7 @@ namespace Camera_og_billedemanipulation
         {
             Form2 form2 = new Form2();
             Bitmap bt = new Bitmap(pictureBox1.Image);
-            for (int y = 0; y < bt.Height; y++)
-            {
-                for (int x = 0; x < bt.Width; x++)
-                {
-                    Color c = bt.GetPixel(x, y);
-
-                    int avg = (c.R + c.G + c.B) / 3;
-                    bt.SetPixel(x, y, Color.FromArgb(avg, avg, avg));
-                }
-            }
+            
             form2.ImageFromForm1 = bt;
             form2.ShowDialog();
         }
