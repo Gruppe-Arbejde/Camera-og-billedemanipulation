@@ -21,6 +21,7 @@ namespace Camera_og_billedemanipulation
 
         private void Form2_Load(object sender, EventArgs e)
         {
+
             pictureBoxOriginal.Image = ImageFromForm1;
             Bitmap bt = new Bitmap(pictureBoxOriginal.Image);
 
@@ -63,6 +64,11 @@ namespace Camera_og_billedemanipulation
             Threshold filter = new Threshold(value);
             Bitmap bt = filter.Apply((Bitmap)pictureBoxOriginal.Image);
             pictureBoxFiltered.Image = bt;
+        }
+
+        private void buttonOk_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

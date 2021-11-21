@@ -10,6 +10,11 @@ namespace Camera_og_billedemanipulation
 {
     public partial class Form1 : Form
     {
+        public void UpdatePictureBox(Image image)
+        {
+            imgCapture.Image = image;
+        }
+
         //variable declaration
         Stack<Bitmap> imageStack;
         internal GlobalVars gv;  // Instantiate Global Var
@@ -79,6 +84,7 @@ namespace Camera_og_billedemanipulation
             {
                 imgCapture.Image = (Image)imgVideo.Image.Clone();
                 pictureBox1.Image = (Image)imgVideo.Image.Clone();
+                imageStack.Push(new Bitmap(pictureBox1.Image));
 
                 buttonsStatus(true);    // Color scale buttons
                 backcolorChange(Color.Transparent); // Hides the button, when we don't need it
@@ -121,7 +127,9 @@ namespace Camera_og_billedemanipulation
         {
             // Only if there is still something left on the stack
             if (imageStack.Count > 0)
-                imgCapture.Image = imageStack.Pop();
+                pictureBox1.Image = imageStack.Pop();
+                imgCapture.Image = pictureBox1.Image;
+                
         }
 
         private void resolutionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -234,9 +242,13 @@ namespace Camera_og_billedemanipulation
         {
             Form2 form2 = new Form2();
             Bitmap bt = new Bitmap(pictureBox1.Image);
-            
+
             form2.ImageFromForm1 = bt;
             form2.ShowDialog();
+
+            pictureBox1.Image = form2.pictureBoxFiltered.Image;
+            imgCapture.Image = pictureBox1.Image;
+            imageStack.Push(new Bitmap(pictureBox1.Image));
         }
 
         /// <summary>
@@ -473,5 +485,6 @@ namespace Camera_og_billedemanipulation
 
         string NoWebOn = "You need to turn your webcam on first.";
         string NoWebDet = "No webcam detected!";
+
     }
 }
